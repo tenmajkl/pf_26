@@ -57,7 +57,7 @@ setInterval(function() {
 
 let pozadi
 
-loader.load("/models/base.glb", function(gltf) {
+loader.load("models/base.glb", function(gltf) {
     scene.add(gltf.scene);
     pozadi = gltf.scene
 }, undefined, function(e) {
