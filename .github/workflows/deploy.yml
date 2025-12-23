@@ -33,9 +33,9 @@ jobs:
           node-version: lts/*
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn
+        run: npm install 
       - name: Build
-        run: yarn build
+        run: npx vite build 
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
