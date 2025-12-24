@@ -75,10 +75,8 @@ await Promise.all(
 );
 
 let nextStartTime = listener.context.currentTime;
-let loaded = false
 
 function loadAudio() {
-  loaded = true
   const buffer = buffers[Math.floor(Math.random() * buffers.length)];
 
   const source = listener.context.createBufferSource();
@@ -109,9 +107,8 @@ function tilt(x, y) {
 document.addEventListener("mousemove", (event) => tilt(event.movementX, event.movementY));
 
 textel.onclick = function() {
-    if (!loaded) {
-        loadAudio(audioLoader, sound)
-    }
+    listener.context.resume();
+
     if (
       DeviceMotionEvent &&
       typeof DeviceMotionEvent.requestPermission === "function"
@@ -121,7 +118,7 @@ textel.onclick = function() {
 
     // fuck web standarts i guess
     window.addEventListener("deviceorientation", function (event) {
-        tilt(event.gamma / 100, event.beta / 100);
+        tilt(event.beta / 10, event.gamma / 10);
     }, true);
     window.addEventListener('devicemotion', function (event) {
         tilt(event.acceleration.x * 2, event.acceleration.y * 2);
