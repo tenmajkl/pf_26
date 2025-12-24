@@ -35,41 +35,7 @@ let symbols = [
 var light = new THREE.DirectionalLight(0x5470b9, 10);
 scene.add(light);
 
-const bgnois = new Audio()
-console.log(bgnois)
 
-function tilt(x, y) {
-    if (bgnois.ended || bgnois.paused) {
-        bgnois.src = "sounds/zap_" + (Math.ceil(Math.random() * 12)) + ".mp3"
-        bgnois.play()
-    }
-    light.position.setZ(x * Math.random())
-    light.position.setX(y * Math.random())
-    camera.rotateX(-y / 100)
-    camera.rotateY(-x / 100)
-}
-
-document.addEventListener("mousemove", (event) => tilt(event.movementX, event.movementY));
-
-textel.onclick = function() {
-    if (
-      DeviceMotionEvent &&
-      typeof DeviceMotionEvent.requestPermission === "function"
-    ) {
-        DeviceMotionEvent.requestPermission(), 1000
-    }
-
-    // fuck web standarts i guess
-    window.addEventListener("deviceorientation", function (event) {
-        tilt(event.beta, event.gamma);
-    }, true);
-    window.addEventListener('devicemotion', function (event) {
-        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
-    }, true);
-    window.addEventListener("MozOrientation", function (orientation) {
-        tilt(orientation.x * 50, orientation.y * 50);
-    }, true);
-}
 
 setInterval(function() {
     textel.innerText = text.replace(text.charAt(Math.floor(Math.random() * 6)), symbols[Math.floor(Math.random() * symbols.length)])
@@ -109,8 +75,10 @@ await Promise.all(
 );
 
 let nextStartTime = listener.context.currentTime;
+let loaded = false
 
 function loadAudio() {
+  loaded = true
   const buffer = buffers[Math.floor(Math.random() * buffers.length)];
 
   const source = listener.context.createBufferSource();
@@ -123,6 +91,44 @@ function loadAudio() {
   nextStartTime += buffer.duration - 10;
 
   source.onended = loadAudio;
+}
+
+const bgnois = new Audio()
+
+function tilt(x, y) {
+    if (bgnois.ended || bgnois.paused) {
+        bgnois.src = "sounds/zap_" + (Math.ceil(Math.random() * 12)) + ".mp3"
+        bgnois.play()
+    }
+    light.position.setZ(x * Math.random())
+    light.position.setX(y * Math.random())
+    camera.rotateX(-y / 100)
+    camera.rotateY(-x / 100)
+}
+
+document.addEventListener("mousemove", (event) => tilt(event.movementX, event.movementY));
+
+textel.onclick = function() {
+    if (!loaded) {
+        loadAudio(audioLoader, sound)
+    }
+    if (
+      DeviceMotionEvent &&
+      typeof DeviceMotionEvent.requestPermission === "function"
+    ) {
+        DeviceMotionEvent.requestPermission(), 1000
+    }
+
+    // fuck web standarts i guess
+    window.addEventListener("deviceorientation", function (event) {
+        tilt(event.gamma / 100, event.beta / 100);
+    }, true);
+    window.addEventListener('devicemotion', function (event) {
+        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
+    }, true);
+    window.addEventListener("MozOrientation", function (orientation) {
+        tilt(orientation.x * 50, orientation.y * 50);
+    }, true);
 }
 
 loadAudio(audioLoader, sound)
