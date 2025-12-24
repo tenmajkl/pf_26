@@ -118,11 +118,12 @@ textel.onclick = function() {
 
     // fuck web standarts i guess
     window.addEventListener("deviceorientation", function (event) {
+        console.log(event.beta, event.gamma, event.alpha)
         tilt(event.beta / 10, event.gamma / 10);
     }, true);
-    window.addEventListener('devicemotion', function (event) {
-        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
-    }, true);
+//    window.addEventListener('devicemotion', function (event) {
+//        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
+//    }, true);
     window.addEventListener("MozOrientation", function (orientation) {
         tilt(orientation.x * 50, orientation.y * 50);
     }, true);
