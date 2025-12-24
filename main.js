@@ -105,7 +105,7 @@ function tilt(x, y) {
 }
 
 document.addEventListener("mousemove", (event) => tilt(event.movementX, event.movementY));
-let beta = 0, gamma = 0
+let beta = 0, alpha = 0
 
 textel.onclick = function() {
     listener.context.resume();
@@ -119,9 +119,9 @@ textel.onclick = function() {
 
     // fuck web standarts i guess
     window.addEventListener("deviceorientation", function (event) {
-        tilt((event.gamma - gamma) * 3, (beta - event.beta) * 5);
+        tilt((event.alpha - alpha) * 5, (beta - event.beta) * 3);
         beta = event.beta
-        gamma = event.gamma
+        alpha = eventalpha.
     }, true);
 //    window.addEventListener('devicemotion', function (event) {
 //        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
