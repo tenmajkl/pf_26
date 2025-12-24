@@ -57,6 +57,7 @@ if (window.DeviceOrientationEvent) {
         tilt(event.beta, event.gamma);
     }, true);
 } else if (window.DeviceMotionEvent) {
+    DeviceMotionEvent.requestPermission();
     window.addEventListener('devicemotion', function (event) {
         tilt(event.acceleration.x * 2, event.acceleration.y * 2);
     }, true);
