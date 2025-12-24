@@ -123,12 +123,6 @@ textel.onclick = function() {
         beta = event.beta
         alpha = event.alpha
     }, true);
-    window.addEventListener('devicemotion', function (event) {
-        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
-    }, true);
-    window.addEventListener("MozOrientation", function (orientation) {
-        tilt(orientation.x * 50, orientation.y * 50);
-    }, true);
 }
 
 loadAudio(audioLoader, sound)
