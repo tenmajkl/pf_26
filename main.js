@@ -51,21 +51,23 @@ function tilt(x, y) {
 
 document.addEventListener("mousemove", (event) => tilt(event.movementX, event.movementY));
 
-// fuck web standarts i guess
-if (window.DeviceOrientationEvent) {
-    window.addEventListener("deviceorientation", function (event) {
-        tilt(event.beta, event.gamma);
-    }, true);
-} else if (window.DeviceMotionEvent) {
-    DeviceMotionEvent.requestPermission();
-    window.addEventListener('devicemotion', function (event) {
-        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
-    }, true);
-} else {
-    window.addEventListener("MozOrientation", function (orientation) {
-        tilt(orientation.x * 50, orientation.y * 50);
-    }, true);
+if (
+  DeviceMotionEvent &&
+  typeof DeviceMotionEvent.requestPermission === "function"
+) {
+  DeviceMotionEvent.requestPermission();
 }
+
+// fuck web standarts i guess
+window.addEventListener("deviceorientation", function (event) {
+    tilt(event.beta, event.gamma);
+}, true);
+window.addEventListener('devicemotion', function (event) {
+    tilt(event.acceleration.x * 2, event.acceleration.y * 2);
+}, true);
+window.addEventListener("MozOrientation", function (orientation) {
+    tilt(orientation.x * 50, orientation.y * 50);
+}, true);
 
 setInterval(function() {
     textel.innerText = text.replace(text.charAt(Math.floor(Math.random() * 6)), symbols[Math.floor(Math.random() * symbols.length)])
