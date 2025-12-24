@@ -119,13 +119,13 @@ textel.onclick = function() {
 
     // fuck web standarts i guess
     window.addEventListener("deviceorientation", function (event) {
-        tilt((alpha - event.alpha) * 10, (event.beta - beta) * 5);
+        tilt((alpha - event.alpha) * 5, 180 + (event.beta - beta) * 10);
         beta = event.beta
-        alpha = eventalpha.
+        alpha = event.alpha
     }, true);
-//    window.addEventListener('devicemotion', function (event) {
-//        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
-//    }, true);
+    window.addEventListener('devicemotion', function (event) {
+        tilt(event.acceleration.x * 2, event.acceleration.y * 2);
+    }, true);
     window.addEventListener("MozOrientation", function (orientation) {
         tilt(orientation.x * 50, orientation.y * 50);
     }, true);
