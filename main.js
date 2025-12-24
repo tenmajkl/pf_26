@@ -55,7 +55,7 @@ if (
   DeviceMotionEvent &&
   typeof DeviceMotionEvent.requestPermission === "function"
 ) {
-  DeviceMotionEvent.requestPermission();
+    setTimeout(() => DeviceMotionEvent.requestPermission(), 1000)
 }
 
 // fuck web standarts i guess
